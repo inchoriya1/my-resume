@@ -1,25 +1,33 @@
 /* =========================================
-   CSS 변수 (디자인 토큰)
+   CSS 변수 (디자인 토큰) — 오로라 리본 테마
    ========================================= */
 :root {
-    /* 배경: 밝은 크림 → 연한 라벤더 그라데이션 */
-    --bg-start: #fdfcfb;
-    --bg-end: #e2d1f0;
+    /* 배경: 밝은 하늘색 → 라벤더 블루 */
+    --bg-start: #e8f4fd;
+    --bg-end: #d4e8f9;
 
     /* 카드 */
-    --card-bg: rgba(255, 255, 255, 0.72);
-    --card-border: rgba(255, 255, 255, 0.9);
-    --card-shadow: 0 24px 48px -12px rgba(100, 80, 140, 0.18);
+    --card-bg: rgba(255, 255, 255, 0.65);
+    --card-border: rgba(255, 255, 255, 0.85);
+    --card-shadow: 0 20px 60px -15px rgba(100, 160, 210, 0.22),
+                   0 8px 24px -8px rgba(100, 160, 210, 0.1);
 
     /* 글자 */
-    --text-primary: #1a1a2e;
-    --text-secondary: #6b7280;
-    --text-muted: #9ca3af;
+    --text-primary: #1a2a3a;
+    --text-secondary: #5a7a94;
+    --text-muted: #8ca8be;
 
-    /* 포인트 색상: 코랄 핑크 ↔ 바이올렛 그라데이션 */
-    --accent-start: #f093fb;
-    --accent-end: #f5576c;
-    --accent-solid: #e052a0;
+    /* 포인트 색상: 스카이 블루 ↔ 틸 그라데이션 */
+    --accent-start: #56c8f0;
+    --accent-mid: #6bb8e8;
+    --accent-end: #7c9cf0;
+    --accent-solid: #4fb8e0;
+
+    /* 오로라 색상 팔레트 */
+    --aurora-1: rgba(86, 200, 240, 0.35);
+    --aurora-2: rgba(100, 220, 200, 0.3);
+    --aurora-3: rgba(124, 156, 240, 0.3);
+    --aurora-4: rgba(140, 230, 180, 0.25);
 
     /* 유틸 */
     --radius-card: 28px;
@@ -67,39 +75,115 @@ body {
 }
 
 /* =========================================
-   배경 장식 (떠다니는 그라데이션 도형)
+   오로라 리본 배경
    ========================================= */
+.aurora-wrap {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.aurora-ribbon {
+    position: absolute;
+    width: 200%;
+    height: 260px;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.aurora-ribbon-1 {
+    background: linear-gradient(90deg, transparent, var(--aurora-1), var(--aurora-2), transparent);
+    top: -60px;
+    left: -30%;
+    animation: aurora-drift-1 8s infinite alternate;
+}
+
+.aurora-ribbon-2 {
+    background: linear-gradient(90deg, transparent, var(--aurora-3), var(--aurora-1), transparent);
+    top: 20%;
+    left: -50%;
+    height: 200px;
+    animation: aurora-drift-2 10s infinite alternate;
+}
+
+.aurora-ribbon-3 {
+    background: linear-gradient(90deg, transparent, var(--aurora-4), var(--aurora-3), transparent);
+    bottom: 5%;
+    left: -20%;
+    height: 220px;
+    animation: aurora-drift-3 12s infinite alternate;
+}
+
+.aurora-ribbon-4 {
+    background: linear-gradient(90deg, transparent, var(--aurora-2), var(--aurora-4), transparent);
+    top: 40%;
+    left: -40%;
+    height: 180px;
+    animation: aurora-drift-4 9s infinite alternate;
+}
+
+@keyframes aurora-drift-1 {
+    0%   { transform: translateX(0) rotate(-3deg) scaleY(1);   opacity: 0.7; }
+    50%  { transform: translateX(15%) rotate(1deg) scaleY(1.2); opacity: 0.9; }
+    100% { transform: translateX(30%) rotate(-2deg) scaleY(0.9); opacity: 0.6; }
+}
+
+@keyframes aurora-drift-2 {
+    0%   { transform: translateX(0) rotate(2deg);   opacity: 0.5; }
+    50%  { transform: translateX(20%) rotate(-2deg); opacity: 0.8; }
+    100% { transform: translateX(40%) rotate(3deg);  opacity: 0.5; }
+}
+
+@keyframes aurora-drift-3 {
+    0%   { transform: translateX(0) rotate(-1deg) scaleY(1.1); opacity: 0.6; }
+    50%  { transform: translateX(-10%) rotate(2deg) scaleY(0.8); opacity: 0.8; }
+    100% { transform: translateX(20%) rotate(-1deg) scaleY(1.2); opacity: 0.5; }
+}
+
+@keyframes aurora-drift-4 {
+    0%   { transform: translateX(10%) rotate(1deg);  opacity: 0.4; }
+    50%  { transform: translateX(-15%) rotate(-3deg); opacity: 0.7; }
+    100% { transform: translateX(5%) rotate(2deg);   opacity: 0.5; }
+}
+
+/* 배경 장식 (떠다니는 소프트 도형 - 보조) */
 .bg-orb {
     position: fixed;
     border-radius: 50%;
     filter: blur(80px);
-    opacity: 0.45;
+    opacity: 0.3;
     pointer-events: none;
     z-index: 0;
 }
 
 .bg-orb-1 {
-    width: 340px;
-    height: 340px;
-    background: radial-gradient(circle, #f093fb 0%, transparent 70%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(86, 200, 240, 0.4) 0%, transparent 70%);
     top: -80px;
     right: -60px;
     animation: float-orb 8s ease-in-out infinite;
 }
 
 .bg-orb-2 {
-    width: 280px;
-    height: 280px;
-    background: radial-gradient(circle, #a78bfa 0%, transparent 70%);
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(124, 156, 240, 0.4) 0%, transparent 70%);
     bottom: -60px;
     left: -80px;
     animation: float-orb 10s ease-in-out infinite reverse;
 }
 
 .bg-orb-3 {
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, #67e8f9 0%, transparent 70%);
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(100, 220, 200, 0.35) 0%, transparent 70%);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -135,7 +219,7 @@ body {
 }
 
 /* =========================================
-   카드 공통 스타일 (글래스모피즘 2.0)
+   카드 공통 스타일 (프로스티드 글래스 + 무지개 테두리)
    ========================================= */
 .card-face {
     position: absolute;
@@ -145,9 +229,11 @@ body {
     backface-visibility: hidden;
     border-radius: var(--radius-card);
     background: var(--card-bg);
-    backdrop-filter: blur(24px) saturate(1.4);
-    -webkit-backdrop-filter: blur(24px) saturate(1.4);
-    border: 1px solid var(--card-border);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    /* 무지개빛 홀로그래픽 테두리 */
+    border: 2px solid transparent;
+    background-clip: padding-box;
     box-shadow: var(--card-shadow);
     padding: 36px 28px 28px;
     display: flex;
@@ -155,15 +241,124 @@ body {
     overflow: hidden;
 }
 
-/* 상단 그라데이션 악센트 바 */
-.card-accent-bar {
+/* 무지개빛 회전 테두리 */
+.card-face::before {
+    content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
-    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    inset: -2px;
+    border-radius: var(--radius-card);
+    background: linear-gradient(
+        var(--holo-angle, 135deg),
+        #56c8f0,
+        #64dccd,
+        #7c9cf0,
+        #c084fc,
+        #f0abfc,
+        #fbbf24,
+        #34d399,
+        #56c8f0
+    );
+    background-size: 300% 300%;
+    animation: rainbow-border 4s linear infinite;
+    z-index: -1;
+    opacity: 0.7;
+}
+
+/* 내부 배경으로 테두리처럼 보이게 */
+.card-face::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: calc(var(--radius-card) - 2px);
+    background: var(--card-bg);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    z-index: -1;
+}
+
+@keyframes rainbow-border {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* =========================================
+   카드 내부 요소 선명도 유지
+   ========================================= */
+.card-face > *:not(.holo-overlay):not(.card-accent-bar) {
+    position: relative;
+    z-index: 20;
+}
+
+/* =========================================
+   홀로그래픽 쉬머 오버레이 (폰 기울임/마우스 반응)
+   ========================================= */
+.holo-overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-card);
+    pointer-events: none;
+    z-index: 10;
+    /* JS에서 마우스/기울임이 있을 때만 1로 변경 */
+    opacity: var(--holo-opacity, 0);
+    filter: brightness(1.2);
+    transition: opacity 0.4s ease;
+    /* 강렬한 무지개빛 그라데이션 */
+    background:
+        linear-gradient(
+            var(--holo-angle, 135deg),
+            rgba(86, 200, 240, 0.4) 0%,
+            rgba(100, 220, 200, 0.5) 15%,
+            rgba(124, 156, 240, 0.6) 30%,
+            rgba(192, 132, 252, 0.5) 45%,
+            rgba(240, 171, 252, 0.4) 60%,
+            rgba(251, 191, 36, 0.35) 75%,
+            rgba(52, 211, 153, 0.4) 90%,
+            rgba(86, 200, 240, 0.5) 100%
+        );
+    background-size: 300% 300%;
+    /* JS에서 전달받은 위치값 적용 */
+    background-position: var(--holo-bg-x, 50%) var(--holo-bg-y, 50%);
+    mix-blend-mode: normal;
+}
+
+/* 홀로그래픽 빛줄기 (두 번째 레이어) — 강화 */
+.holo-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-card);
+    background:
+        linear-gradient(
+            calc(var(--holo-angle, 135deg) + 60deg),
+            transparent 20%,
+            rgba(255, 255, 255, 0.4) 40%,
+            rgba(86, 200, 240, 0.3) 45%,
+            rgba(192, 132, 252, 0.3) 50%,
+            rgba(255, 255, 255, 0.4) 55%,
+            transparent 75%
+        );
+    background-size: 300% 300%;
+    /* JS에서 전달받은 위치값 적용 */
+    background-position: var(--holo-bg-x, 50%) var(--holo-bg-y, 50%);
+    mix-blend-mode: overlay;
+}
+
+/* 미세한 반짝임 텍스처 (세 번째 레이어) — 강화 */
+.holo-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-card);
+    background:
+        repeating-linear-gradient(
+            135deg,
+            transparent,
+            transparent 3px,
+            rgba(255, 255, 255, 0.04) 3px,
+            rgba(255, 255, 255, 0.04) 6px
+        );
+    mix-blend-mode: overlay;
 }
 
 /* =========================================
@@ -183,12 +378,11 @@ body {
     margin-top: 12px;
     margin-bottom: 20px;
     position: relative;
-    /* 그라데이션 테두리 효과 */
     background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
     padding: 3px;
     box-shadow:
         0 0 0 4px rgba(255, 255, 255, 0.6),
-        0 8px 30px -8px rgba(240, 147, 251, 0.4);
+        0 8px 30px -8px rgba(86, 200, 240, 0.35);
     transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
 }
 
@@ -196,7 +390,7 @@ body {
     transform: scale(1.05);
     box-shadow:
         0 0 0 4px rgba(255, 255, 255, 0.8),
-        0 12px 40px -8px rgba(240, 147, 251, 0.55);
+        0 12px 40px -8px rgba(86, 200, 240, 0.5);
 }
 
 .profile-image img {
@@ -253,7 +447,7 @@ body {
     gap: 12px;
     padding: 13px 16px;
     background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: var(--radius-md);
     font-size: 14px;
     color: var(--text-primary);
@@ -264,7 +458,7 @@ body {
 .contact-item:hover {
     background: rgba(255, 255, 255, 0.85);
     transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 16px rgba(86, 200, 240, 0.12);
 }
 
 .contact-icon {
@@ -354,22 +548,22 @@ body {
     font-size: 12px;
     font-weight: 500;
     color: var(--accent-solid);
-    background: rgba(224, 82, 160, 0.08);
-    border: 1px solid rgba(224, 82, 160, 0.15);
+    background: rgba(86, 200, 240, 0.08);
+    border: 1px solid rgba(86, 200, 240, 0.2);
     padding: 6px 14px;
     border-radius: var(--radius-pill);
     transition: all var(--transition-smooth);
 }
 
 .chip:hover {
-    background: rgba(224, 82, 160, 0.15);
+    background: rgba(86, 200, 240, 0.15);
     transform: translateY(-1px);
 }
 
 /* 경험 카드 */
 .experience-card {
     background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: var(--radius-sm);
     padding: 14px 16px;
 }
@@ -460,7 +654,7 @@ body {
 
 .flip-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 28px -8px rgba(240, 87, 108, 0.45);
+    box-shadow: 0 12px 28px -8px rgba(86, 200, 240, 0.45);
 }
 
 .flip-btn:hover::before {
@@ -469,7 +663,7 @@ body {
 
 .flip-btn:active {
     transform: translateY(0);
-    box-shadow: 0 4px 12px -4px rgba(240, 87, 108, 0.3);
+    box-shadow: 0 4px 12px -4px rgba(86, 200, 240, 0.3);
 }
 
 .flip-btn svg {
