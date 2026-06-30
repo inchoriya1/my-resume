@@ -560,6 +560,17 @@ body {
     transform: translateY(-1px);
 }
 
+.chip.highlight {
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+    color: #fff;
+    border: 1px solid transparent;
+    font-weight: 600;
+}
+
+.chip.highlight:hover {
+    box-shadow: 0 4px 12px rgba(86, 200, 240, 0.3);
+}
+
 /* 경험 카드 */
 .experience-card {
     background: rgba(255, 255, 255, 0.5);
